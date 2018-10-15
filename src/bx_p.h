@@ -15,6 +15,9 @@
 #	define BX_WARN  _BX_WARN
 #	define BX_CHECK _BX_CHECK
 #	define BX_CONFIG_ALLOCATOR_DEBUG 1
+#elif !defined(NDEBUG)
+#	define BX_WARN  _BX_WARN
+#	define BX_CHECK _BX_CHECK
 #endif // BX_CONFIG_DEBUG
 
 #define _BX_TRACE(_format, ...)                                                                       \
@@ -26,7 +29,7 @@
 				BX_MACRO_BLOCK_BEGIN                              \
 					if (!BX_IGNORE_C4127(_condition) )            \
 					{                                             \
-						BX_TRACE("WARN " _format, ##__VA_ARGS__); \
+						_BX_TRACE("WARN " _format, ##__VA_ARGS__); \
 					}                                             \
 				BX_MACRO_BLOCK_END
 
@@ -34,7 +37,7 @@
 				BX_MACRO_BLOCK_BEGIN                               \
 					if (!BX_IGNORE_C4127(_condition) )             \
 					{                                              \
-						BX_TRACE("CHECK " _format, ##__VA_ARGS__); \
+						_BX_TRACE("CHECK " _format, ##__VA_ARGS__); \
 						bx::debugBreak();                          \
 					}                                              \
 				BX_MACRO_BLOCK_END
